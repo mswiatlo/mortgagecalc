@@ -143,7 +143,17 @@ def make_summary(outputs, labels):
 
     #comparison of balances
     fig = plt.figure()
-    fig.set_size_inches(10, 8)
+    fig.set_size_inches(8, 6)
     ax = fig.add_axes([0,0,1,1])
     ax.bar(labels,list_final_balance)
+    ax.set_ylabel('Balance')
+    plt.show()
+
+    #comparison of principal fraction
+    fig = plt.figure()
+    fig.set_size_inches(8, 6)
+    ax = fig.add_axes([0,0,1,1])
+    ax.bar(labels, [x / y for x, y in zip(list_principal_payments, list_total_payments)])
+    ax.set_ylabel('Fraction of payments going to principal')
+    plt.ylim([0, 1])
     plt.show()
