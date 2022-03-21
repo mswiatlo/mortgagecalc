@@ -2,8 +2,8 @@ from re import I
 import matplotlib.pyplot as plt
 import numpy as np
 
-def generate_flat(rate):
-    return np.ones(60) * rate
+def generate_flat(rate, months = 60):
+    return np.ones(months) * rate
 
 def make_plots(outputs, labels):
     list_of_plots = ['payments', 'interest_payments', 'principal_payments', 'balance']
@@ -85,6 +85,8 @@ def calculate_monthly_amortization(loan, rates, loan_length_years, term_length_y
 
     return output
 
+# todo: format this as a table instead, or in addition
+# todo: make summary plots as well comparing the various options
 def make_summary(outputs, labels):
     best_balance = 10000000000000
     best_label = 'None'
@@ -104,7 +106,7 @@ def make_summary(outputs, labels):
             worst_balance = final_balance
             worst_label = label
 
-        output_string = f'For {label}, your final balance is {final_balance}. You paid {total_interest_payments} in interest and {total_principal_payments} in principal, for a principal fraction of {round(total_principal_payments / total_payments, 3)}.\n'
+        output_string = f'For {label}, your final balance is {round(final_balance, 2)}. You paid {total_interest_payments} in interest and {total_principal_payments} in principal, for a principal fraction of {round(total_principal_payments / total_payments, 3)}\n'
         print(output_string)
     
     final_string = f'Out of the above choices, {best_label} has the best final balance, at {best_balance}. This gives {round(worst_balance - best_balance, 2)} of savings compared to the worst scenario, {worst_label}.'
