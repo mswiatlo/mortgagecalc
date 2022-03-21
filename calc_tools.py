@@ -1,11 +1,12 @@
 from re import I
+from typing import final
 import matplotlib.pyplot as plt
 import numpy as np
 
 def generate_flat(rate, months = 60):
     return np.ones(months) * rate
 
-def make_plots(outputs, labels):
+def make_plots_vs_time(outputs, labels):
     list_of_plots = ['payments', 'interest_payments', 'principal_payments', 'balance']
 
     for plot in list_of_plots:
@@ -94,11 +95,22 @@ def make_summary(outputs, labels):
     worst_balance = 0
     worst_label = 'None'
 
+    list_total_payments = []
+    list_interest_payments = []
+    list_principal_payments = []
+    list_final_balance = []
+
     for output, label in zip(outputs, labels):
         total_payments = round(sum(output['payments']), 2)
         total_interest_payments = round(sum(output['interest_payments']), 2)
         total_principal_payments = round(sum(output['principal_payments']), 2)
         final_balance = output['balance'][-1]
+
+        list_total_payments.append(total_payments)
+        list_interest_payments.append(total_interest_payments)
+        list_principal_payments.append(total_principal_payments)
+        list_final_balance.append(final_balance)
+
         if final_balance < best_balance:
             best_balance = final_balance
             best_label = label
@@ -111,3 +123,27 @@ def make_summary(outputs, labels):
     
     final_string = f'Out of the above choices, {best_label} has the best final balance, at {best_balance}. This gives {round(worst_balance - best_balance, 2)} of savings compared to the worst scenario, {worst_label}.'
     print(final_string)
+
+
+    # comparison of payments
+    X = np.arange(len(labels))
+    fig, ax = plt.subplots()
+    fig.set_size_inches(10, 8)
+    ax.set_xticks(X+0.25)
+    ax.set_xticklabels(labels)
+    rects1 = ax.bar(X + 0.00, list_total_payments, width = 0.25)
+    rects2 = ax.bar(X + 0.25, list_interest_payments, width = 0.25)
+    rects3 = ax.bar(X + 0.50, list_principal_payments, width = 0.25)
+
+
+    plt.legend(['Total payments', 'Interest payments', 'Principal payments'])
+
+    plt.show()  
+
+
+    #comparison of balances
+    fig = plt.figure()
+    fig.set_size_inches(10, 8)
+    ax = fig.add_axes([0,0,1,1])
+    ax.bar(labels,list_final_balance)
+    plt.show()
