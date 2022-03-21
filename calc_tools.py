@@ -121,7 +121,7 @@ def make_summary(outputs, labels):
         output_string = f'For {label}, your final balance is {round(final_balance, 2)}. You paid {total_interest_payments} in interest and {total_principal_payments} in principal, for a principal fraction of {round(total_principal_payments / total_payments, 3)}\n'
         print(output_string)
     
-    final_string = f'Out of the above choices, {best_label} has the best final balance, at {best_balance}. This gives {round(worst_balance - best_balance, 2)} of savings compared to the worst scenario, {worst_label}.'
+    final_string = f'Out of the above choices, {best_label} has the best final balance, at {round(best_balance, 2)}. This gives {round(worst_balance - best_balance, 2)} of savings compared to the worst scenario, {worst_label}.'
     print(final_string)
 
 
