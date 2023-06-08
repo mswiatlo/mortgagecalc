@@ -16,7 +16,7 @@ def make_plots_vs_time(outputs, labels):
 
 def plot_vs_time(y_list, labels, ylabel = 'Balance', xlabel = 'Month', month = True):
     if month:
-        x = range(0, 60, 1)
+        x = range(0, len(y_list[0]), 1)
     else:
         x = range(0, 5, 1./12.)
     
@@ -29,6 +29,12 @@ def plot_vs_time(y_list, labels, ylabel = 'Balance', xlabel = 'Month', month = T
     plt.legend(labels)
 
     plt.show()
+
+def reduce_output(for_reducing, length):
+    out = {}
+    for key in for_reducing:
+        out[key] = for_reducing[key][:length]
+    return out
 
 def calculate_monthly_rate(annual_rate, monthly = False):
     annual_rate_dec = annual_rate * 0.01
